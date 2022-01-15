@@ -15,6 +15,17 @@ if(isset($_POST['btn'])){
 }
 
 ?>
+<?php
+if(isset($_GET['delete'])){
+    $stdid=$_GET['delete'];
+    $query="DELETE FROM student WHERE id={$stdid}";
+    $deletequery=mysqli_query($conn,$query);
+    if($deletequery){
+        echo "Data Remove Successfully";
+    }
+}
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -47,7 +58,7 @@ if(isset($_POST['btn'])){
             <th>Student Id</th>
             <th>Student Name</th>
             <th>Student Registration Number</th>
-            <th></th>
+            <th>Delete</th>
             <th></th>
         </tr>
         <?php
@@ -65,12 +76,15 @@ if(isset($_POST['btn'])){
             <td><?php echo $stdid; ?></td>
             <td><?php echo $stdname; ?></td>
             <td><?php echo $stdreg; ?></td>
-            <td></td>
+            <td><a href="index.php?delete=<?php echo $stdid; ?>" class="btn btn-danger">Delete</a></td>
             <td></td>
         </tr>
         <?php
             }
               } 
+              else {
+                  echo "No data to show";
+              }
         ?>
     </table>
 </div>
