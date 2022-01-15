@@ -51,15 +51,52 @@ if(isset($_GET['delete'])){
 
     </div>
 <!--End Form -->
+  <!--update Form Start -->
+  <div class="container  m-5 p-3">
+        <form action="" method="post" class="d-flex justify-content-around">
+            <?php
+            if(isset($_GET['update'])){
+                $stdid=$_GET['update'];
+                $query="SELECT * FROM student WHERE id={$stdid}";
+                $getdata=mysqli_query($conn,$query);
+                while($rx=mysqli_fetch_assoc($getdata)){
+                    $stdid=$rx['id'];
+                    $stdname=$rx['stdname'];
+                    $stdreg=$rx['stdreg'];
+              
+            ?>
+             <input type="text" name="stdname" value="<?php echo $stdname; ?>" class="form-control">
+            <input type="number" name="stdreg" value="<?php echo $stdreg; ?>" class="form-control">
+            <input type="submit" value="Update" name="update_btn" class="btn btn-info">
+            <?php
+                }
+              }
+            ?>
+            <?php
+                if(isset($_POST['update_btn'])){
+                    $stdname=$_POST['stdname'];
+                    $stdreg=$_POST['stdreg'];
+                    $query="UPDATE student set stdname='$stdname',stdreg=$stdreg WHERE id=$stdid";
+                    $updatequery=mysqli_query($conn,$query);
+                    echo "<br>";
+                    if($updatequery){
+                        echo "Update Successfully";
+                    }
+                }
+            ?>
+        </form>
+
+    </div>
+<!--update End Form -->
 <!--Table Start -->
 <div class="container">
     <table class="table table-bordered">
-        <tr>
+        <tr align="center">
             <th>Student Id</th>
             <th>Student Name</th>
             <th>Student Registration Number</th>
             <th>Delete</th>
-            <th></th>
+            <th>Update</th>
         </tr>
         <?php
              $query="SELECT * FROM student";
@@ -72,12 +109,12 @@ if(isset($_GET['delete'])){
                  
              
         ?>
-        <tr>
+        <tr align="center">
             <td><?php echo $stdid; ?></td>
             <td><?php echo $stdname; ?></td>
             <td><?php echo $stdreg; ?></td>
             <td><a href="index.php?delete=<?php echo $stdid; ?>" class="btn btn-danger">Delete</a></td>
-            <td></td>
+            <td><a href="index.php?update=<?php echo $stdid; ?>" class="btn btn-primary">Update</a></td>
         </tr>
         <?php
             }
