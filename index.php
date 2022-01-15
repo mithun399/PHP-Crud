@@ -6,6 +6,9 @@ if(isset($_POST['btn'])){
     if(!empty($stdname) && !empty($stdreg)){
         $query="INSERT INTO student(stdname,stdreg) VALUE('$stdname',$stdreg) ";
         $result=mysqli_query($conn,$query);
+        if($result){
+            echo "Your data submitted";
+        }
     }else {
         echo "Field should not be empty";
     }
@@ -26,6 +29,7 @@ if(isset($_POST['btn'])){
     <title>PHP Crud</title>
   </head>
   <body>
+      <!--Form Start -->
     <div class="container shadow m-5 p-3">
         <form action="" method="POST" class="d-flex justify-content-around">
             <input type="text" name="stdname" placeholder="Enter Your Name" class="form-control">
@@ -35,7 +39,42 @@ if(isset($_POST['btn'])){
         </form>
 
     </div>
-
+<!--End Form -->
+<!--Table Start -->
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>Student Id</th>
+            <th>Student Name</th>
+            <th>Student Registration Number</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <?php
+             $query="SELECT * FROM student";
+             $result=mysqli_query($conn,$query);
+             if($result->num_rows>0){
+                 while($rd=mysqli_fetch_assoc($result)){
+                     $stdid=$rd['id'];
+                     $stdname=$rd['stdname'];
+                     $stdreg=$rd['stdreg'];
+                 
+             
+        ?>
+        <tr>
+            <td><?php echo $stdid; ?></td>
+            <td><?php echo $stdname; ?></td>
+            <td><?php echo $stdreg; ?></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <?php
+            }
+              } 
+        ?>
+    </table>
+</div>
+<!--Table End -->
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
