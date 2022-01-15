@@ -1,10 +1,14 @@
 <?php
 $conn=mysqli_connect('localhost','root','','crud');
-if($conn){
-    echo "connection done";
-}
-else {
-    echo "error connection";
+if(isset($_POST['btn'])){
+    $stdname=$_POST['stdname'];
+    $stdreg=$_POST['stdreg'];
+    if(!empty($stdname) && !empty($stdreg)){
+        $query="INSERT INTO student(stdname,stdreg) VALUE('$stdname',$stdreg) ";
+        $result=mysqli_query($conn,$query);
+    }else {
+        echo "Field should not be empty";
+    }
 }
 
 ?>
@@ -24,7 +28,7 @@ else {
   <body>
     <div class="container shadow m-5 p-3">
         <form action="" method="POST" class="d-flex justify-content-around">
-            <input type="text" name="name" placeholder="Enter Your Name" class="form-control">
+            <input type="text" name="stdname" placeholder="Enter Your Name" class="form-control">
             <input type="number" name="stdreg" placeholder="Enter Your Registration Number" class="form-control">
             <input type="submit" value="Send" name="btn" class="btn btn-info">
 
